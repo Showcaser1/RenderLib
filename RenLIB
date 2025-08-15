@@ -1,0 +1,455 @@
+local a = game:GetService("TweenService")
+local b = game:GetService("UserInputService")
+local c = game:GetService("CoreGui")
+local d = game:GetService("Players").LocalPlayer
+local e = d:GetMouse()
+
+local f = {}
+f.__index = f
+
+local g = {
+    bg = Color3.fromRGB(25, 25, 30),
+    fg = Color3.fromRGB(35, 35, 40),
+    accent = Color3.fromRGB(60, 60, 70),
+    text = Color3.fromRGB(255, 255, 255),
+    textdim = Color3.fromRGB(200, 200, 200),
+    border = Color3.fromRGB(45, 45, 50)
+}
+
+local h = function(i, j, k, l)
+    local m = a:Create(i, TweenInfo.new(j or 0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), k)
+    m:Play()
+    if l then m.Completed:Connect(l) end
+    return m
+end
+
+local n = function(o, p)
+    local q = Instance.new("Frame")
+    q.Size = UDim2.new(1, 0, 0, 1)
+    q.Position = UDim2.new(0, 0, p, 0)
+    q.BackgroundColor3 = g.border
+    q.BorderSizePixel = 0
+    q.Parent = o
+    return q
+end
+
+local r = function(s, t, u, v, w)
+    local x = Instance.new("TextButton")
+    x.Size = u or UDim2.new(1, -20, 0, 35)
+    x.Position = v or UDim2.new(0, 10, 0, 0)
+    x.BackgroundColor3 = s
+    x.BorderSizePixel = 0
+    x.Text = t
+    x.TextColor3 = g.text
+    x.TextSize = 14
+    x.Font = Enum.Font.Gotham
+    x.Parent = w
+    
+    local y = Instance.new("UICorner")
+    y.CornerRadius = UDim.new(0, 6)
+    y.Parent = x
+    
+    x.MouseEnter:Connect(function()
+        h(x, 0.2, {BackgroundColor3 = g.accent})
+    end)
+    
+    x.MouseLeave:Connect(function()
+        h(x, 0.2, {BackgroundColor3 = s})
+    end)
+    
+    return x
+end
+
+local z = function()
+    local A = Instance.new("ScreenGui")
+    A.Name = "CustomUI"
+    A.Parent = c
+    A.ResetOnSpawn = false
+    A.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    
+    local B = Instance.new("Frame")
+    B.Name = "MainFrame"
+    B.Size = UDim2.new(0, 580, 0, 460)
+    B.Position = UDim2.new(0.5, -290, 0.5, -230)
+    B.BackgroundColor3 = g.bg
+    B.BorderSizePixel = 0
+    B.ClipsDescendants = true
+    B.Parent = A
+    
+    local C = Instance.new("UICorner")
+    C.CornerRadius = UDim.new(0, 8)
+    C.Parent = B
+    
+    local D = Instance.new("Frame")
+    D.Name = "TitleBar"
+    D.Size = UDim2.new(1, 0, 0, 40)
+    D.BackgroundColor3 = g.fg
+    D.BorderSizePixel = 0
+    D.Parent = B
+    
+    local E = Instance.new("UICorner")
+    E.CornerRadius = UDim.new(0, 8)
+    E.Parent = D
+    
+    local F = Instance.new("Frame")
+    F.Size = UDim2.new(1, 0, 0, 20)
+    F.Position = UDim2.new(0, 0, 0, 20)
+    F.BackgroundColor3 = g.fg
+    F.BorderSizePixel = 0
+    F.Parent = D
+    
+    local G = Instance.new("TextLabel")
+    G.Size = UDim2.new(1, -40, 1, 0)
+    G.Position = UDim2.new(0, 10, 0, 0)
+    G.BackgroundTransparency = 1
+    G.Text = ""
+    G.TextColor3 = g.text
+    G.TextSize = 16
+    G.TextXAlignment = Enum.TextXAlignment.Left
+    G.Font = Enum.Font.GothamBold
+    G.Parent = D
+    
+    local H = Instance.new("TextButton")
+    H.Size = UDim2.new(0, 30, 0, 30)
+    H.Position = UDim2.new(1, -35, 0, 5)
+    H.BackgroundColor3 = Color3.fromRGB(220, 50, 50)
+    H.BorderSizePixel = 0
+    H.Text = "×"
+    H.TextColor3 = Color3.white
+    H.TextSize = 18
+    H.Font = Enum.Font.GothamBold
+    H.Parent = D
+    
+    local I = Instance.new("UICorner")
+    I.CornerRadius = UDim.new(0, 15)
+    I.Parent = H
+    
+    H.MouseButton1Click:Connect(function()
+        A:Destroy()
+    end)
+    
+    local J = Instance.new("Frame")
+    J.Name = "Sidebar"
+    J.Size = UDim2.new(0, 200, 1, -40)
+    J.Position = UDim2.new(0, 0, 0, 40)
+    J.BackgroundColor3 = g.fg
+    J.BorderSizePixel = 0
+    J.Parent = B
+    
+    local K = Instance.new("ScrollingFrame")
+    K.Size = UDim2.new(1, 0, 1, 0)
+    K.BackgroundTransparency = 1
+    K.BorderSizePixel = 0
+    K.ScrollBarThickness = 4
+    K.ScrollBarImageColor3 = g.accent
+    K.CanvasSize = UDim2.new(0, 0, 0, 0)
+    K.Parent = J
+    
+    local L = Instance.new("UIListLayout")
+    L.SortOrder = Enum.SortOrder.LayoutOrder
+    L.Padding = UDim.new(0, 2)
+    L.Parent = K
+    
+    local M = Instance.new("Frame")
+    M.Name = "Content"
+    M.Size = UDim2.new(1, -200, 1, -40)
+    M.Position = UDim2.new(0, 200, 0, 40)
+    M.BackgroundColor3 = g.bg
+    M.BorderSizePixel = 0
+    M.Parent = B
+    
+    n(J, 1)
+    
+    local N = true
+    local O, P = nil, nil
+    
+    D.InputBegan:Connect(function(Q)
+        if Q.UserInputType == Enum.UserInputType.MouseButton1 then
+            N = true
+            O = Q.Position
+            P = B.Position
+        end
+    end)
+    
+    b.InputChanged:Connect(function(Q)
+        if Q.UserInputType == Enum.UserInputType.MouseMovement and N then
+            local R = Q.Position - O
+            B.Position = UDim2.new(P.X.Scale, P.X.Offset + R.X, P.Y.Scale, P.Y.Offset + R.Y)
+        end
+    end)
+    
+    b.InputEnded:Connect(function(Q)
+        if Q.UserInputType == Enum.UserInputType.MouseButton1 then
+            N = false
+        end
+    end)
+    
+    L.Changed:Connect(function()
+        K.CanvasSize = UDim2.new(0, 0, 0, L.AbsoluteContentSize.Y)
+    end)
+    
+    return A, B, G, K, M
+end
+
+local S = function(T, U, V)
+    local W, X, Y, Z, _ = z()
+    Y.Text = T
+    
+    local a0 = {}
+    local a1 = nil
+    local a2 = {}
+    
+    local a3 = function(a4, a5)
+        local a6 = r(g.accent, a4, UDim2.new(1, -10, 0, 40), UDim2.new(0, 5, 0, 0), Z)
+        local a7 = Instance.new("ScrollingFrame")
+        a7.Name = a4
+        a7.Size = UDim2.new(1, -20, 1, -20)
+        a7.Position = UDim2.new(0, 10, 0, 10)
+        a7.BackgroundTransparency = 1
+        a7.BorderSizePixel = 0
+        a7.ScrollBarThickness = 4
+        a7.ScrollBarImageColor3 = g.accent
+        a7.CanvasSize = UDim2.new(0, 0, 0, 0)
+        a7.Visible = false
+        a7.Parent = _
+        
+        local a8 = Instance.new("UIListLayout")
+        a8.SortOrder = Enum.SortOrder.LayoutOrder
+        a8.Padding = UDim.new(0, 10)
+        a8.Parent = a7
+        
+        a8.Changed:Connect(function()
+            a7.CanvasSize = UDim2.new(0, 0, 0, a8.AbsoluteContentSize.Y + 20)
+        end)
+        
+        a6.MouseButton1Click:Connect(function()
+            for a9, aa in pairs(a2) do
+                aa.Visible = false
+                a0[a9].BackgroundColor3 = g.accent
+            end
+            a7.Visible = true
+            a6.BackgroundColor3 = g.text
+            a1 = a4
+        end)
+        
+        a0[a4] = a6
+        a2[a4] = a7
+        
+        if not a1 then
+            a1 = a4
+            a7.Visible = true
+            a6.BackgroundColor3 = g.text
+        end
+        
+        return {
+            ab = function(ac, ad, ae, af)
+                local ag = Instance.new("Frame")
+                ag.Size = UDim2.new(1, 0, 0, 70)
+                ag.BackgroundColor3 = g.fg
+                ag.BorderSizePixel = 0
+                ag.Parent = a7
+                
+                local ah = Instance.new("UICorner")
+                ah.CornerRadius = UDim.new(0, 8)
+                ah.Parent = ag
+                
+                local ai = Instance.new("TextLabel")
+                ai.Size = UDim2.new(1, -20, 0, 20)
+                ai.Position = UDim2.new(0, 10, 0, 5)
+                ai.BackgroundTransparency = 1
+                ai.Text = ac
+                ai.TextColor3 = g.text
+                ai.TextSize = 14
+                ai.TextXAlignment = Enum.TextXAlignment.Left
+                ai.Font = Enum.Font.GothamBold
+                ai.Parent = ag
+                
+                local aj = Instance.new("TextLabel")
+                aj.Size = UDim2.new(1, -20, 0, 15)
+                aj.Position = UDim2.new(0, 10, 0, 25)
+                aj.BackgroundTransparency = 1
+                aj.Text = ad
+                aj.TextColor3 = g.textdim
+                aj.TextSize = 12
+                aj.TextXAlignment = Enum.TextXAlignment.Left
+                aj.Font = Enum.Font.Gotham
+                aj.Parent = ag
+                
+                local ak = r(g.accent, "Execute", UDim2.new(0, 80, 0, 20), UDim2.new(1, -90, 0, 45), ag)
+                
+                ak.MouseButton1Click:Connect(function()
+                    if af then
+                        h(ak, 0.1, {BackgroundColor3 = Color3.fromRGB(50, 200, 50)}, function()
+                            h(ak, 0.3, {BackgroundColor3 = g.accent})
+                        end)
+                        af()
+                    end
+                end)
+                
+                return ak
+            end,
+            
+            al = function(am, an, ao, ap, aq)
+                local ar = Instance.new("Frame")
+                ar.Size = UDim2.new(1, 0, 0, 50)
+                ar.BackgroundColor3 = g.fg
+                ar.BorderSizePixel = 0
+                ar.Parent = a7
+                
+                local as = Instance.new("UICorner")
+                as.CornerRadius = UDim.new(0, 8)
+                as.Parent = ar
+                
+                local at = Instance.new("TextLabel")
+                at.Size = UDim2.new(0, 200, 1, 0)
+                at.Position = UDim2.new(0, 15, 0, 0)
+                at.BackgroundTransparency = 1
+                at.Text = am
+                at.TextColor3 = g.text
+                at.TextSize = 14
+                at.TextXAlignment = Enum.TextXAlignment.Left
+                at.Font = Enum.Font.GothamBold
+                at.Parent = ar
+                
+                local au = Instance.new("TextLabel")
+                au.Size = UDim2.new(0, 150, 1, 0)
+                au.Position = UDim2.new(0, 220, 0, 0)
+                au.BackgroundTransparency = 1
+                au.Text = an
+                au.TextColor3 = g.textdim
+                au.TextSize = 12
+                au.TextXAlignment = Enum.TextXAlignment.Left
+                au.Font = Enum.Font.Gotham
+                au.Parent = ar
+                
+                local av = Instance.new("Frame")
+                av.Size = UDim2.new(0, 40, 0, 20)
+                av.Position = UDim2.new(1, -50, 0.5, -10)
+                av.BackgroundColor3 = ap and g.accent or g.border
+                av.BorderSizePixel = 0
+                av.Parent = ar
+                
+                local aw = Instance.new("UICorner")
+                aw.CornerRadius = UDim.new(0, 10)
+                aw.Parent = av
+                
+                local ax = Instance.new("Frame")
+                ax.Size = UDim2.new(0, 16, 0, 16)
+                ax.Position = ap and UDim2.new(0, 22, 0, 2) or UDim2.new(0, 2, 0, 2)
+                ax.BackgroundColor3 = g.text
+                ax.BorderSizePixel = 0
+                ax.Parent = av
+                
+                local ay = Instance.new("UICorner")
+                ay.CornerRadius = UDim.new(0, 8)
+                ay.Parent = ax
+                
+                local az = ap
+                
+                av.InputBegan:Connect(function(aA)
+                    if aA.UserInputType == Enum.UserInputType.MouseButton1 then
+                        az = not az
+                        local aB = az and UDim2.new(0, 22, 0, 2) or UDim2.new(0, 2, 0, 2)
+                        local aC = az and g.accent or g.border
+                        
+                        h(ax, 0.2, {Position = aB})
+                        h(av, 0.2, {BackgroundColor3 = aC})
+                        
+                        if aq then aq(az) end
+                    end
+                end)
+                
+                return av
+            end,
+            
+            aD = function(aE, aF, aG, aH, aI, aJ)
+                local aK = Instance.new("Frame")
+                aK.Size = UDim2.new(1, 0, 0, 80)
+                aK.BackgroundColor3 = g.fg
+                aK.BorderSizePixel = 0
+                aK.Parent = a7
+                
+                local aL = Instance.new("UICorner")
+                aL.CornerRadius = UDim.new(0, 8)
+                aL.Parent = aK
+                
+                local aM = Instance.new("TextLabel")
+                aM.Size = UDim2.new(1, -20, 0, 20)
+                aM.Position = UDim2.new(0, 10, 0, 5)
+                aM.BackgroundTransparency = 1
+                aM.Text = aE
+                aM.TextColor3 = g.text
+                aM.TextSize = 14
+                aM.TextXAlignment = Enum.TextXAlignment.Left
+                aM.Font = Enum.Font.GothamBold
+                aM.Parent = aK
+                
+                local aN = r(g.accent, aH and aH[1] or "Option 1", UDim2.new(1, -20, 0, 25), UDim2.new(0, 10, 0, 30), aK)
+                local aO = false
+                local aP = aH and aH[1] or "Option 1"
+                
+                local aQ = Instance.new("Frame")
+                aQ.Size = UDim2.new(1, -20, 0, 0)
+                aQ.Position = UDim2.new(0, 10, 0, 55)
+                aQ.BackgroundColor3 = g.accent
+                aQ.BorderSizePixel = 0
+                aQ.ClipsDescendants = true
+                aQ.Parent = aK
+                
+                local aR = Instance.new("UICorner")
+                aR.CornerRadius = UDim.new(0, 6)
+                aR.Parent = aQ
+                
+                local aS = Instance.new("ScrollingFrame")
+                aS.Size = UDim2.new(1, 0, 1, 0)
+                aS.BackgroundTransparency = 1
+                aS.BorderSizePixel = 0
+                aS.ScrollBarThickness = 3
+                aS.ScrollBarImageColor3 = g.border
+                aS.CanvasSize = UDim2.new(0, 0, 0, 0)
+                aS.Parent = aQ
+                
+                local aT = Instance.new("UIListLayout")
+                aT.SortOrder = Enum.SortOrder.LayoutOrder
+                aT.Parent = aS
+                
+                if aH then
+                    for aU, aV in ipairs(aH) do
+                        local aW = r(g.fg, aV, UDim2.new(1, 0, 0, 25), UDim2.new(0, 0, 0, 0), aS)
+                        aW.MouseButton1Click:Connect(function()
+                            aP = aV
+                            aN.Text = aV
+                            aO = false
+                            h(aK, 0.3, {Size = UDim2.new(1, 0, 0, 80)})
+                            h(aQ, 0.3, {Size = UDim2.new(1, -20, 0, 0)})
+                            if aJ then aJ(aV) end
+                        end)
+                    end
+                    aS.CanvasSize = UDim2.new(0, 0, 0, #aH * 25)
+                end
+                
+                aN.MouseButton1Click:Connect(function()
+                    aO = not aO
+                    if aO then
+                        local aX = math.min(#(aH or {}), 5) * 25
+                        h(aK, 0.3, {Size = UDim2.new(1, 0, 0, 80 + aX)})
+                        h(aQ, 0.3, {Size = UDim2.new(1, -20, 0, aX)})
+                    else
+                        h(aK, 0.3, {Size = UDim2.new(1, 0, 0, 80)})
+                        h(aQ, 0.3, {Size = UDim2.new(1, -20, 0, 0)})
+                    end
+                end)
+                
+                return aK
+            end
+        }
+    end
+    
+    return {
+        aY = a3
+    }
+end
+
+return {
+    aZ = S
+}
